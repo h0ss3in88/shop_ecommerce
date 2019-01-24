@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  products_api:
+    container_name: products_micro_service
+    build:
+      context: ./products
+      dockerfile: /products.dockerfile
+    ports:
+      - "8080:4600"
+    depends_on:
+      - postgres
+    networks:
+      - eccommerce-network
+
+  postgres:
+    container_name: balloonshopDB
+    build:
+      context: ./.docker
+      dockerfile: ./postgres.dockerfile
+    ports:
+      - "5432:5432"
+    networks:
+      - eccommerce-network
+networks:
+  eccommerce-network:
+    driver: bridge
